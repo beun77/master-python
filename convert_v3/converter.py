@@ -17,6 +17,30 @@ def greetings(version) :
 	print("\n\n"+"#"*29+"\n##"+" "*25+"##\n##    C O N V E R T E R    ##\n##"+" "*a+version+" "*b+"##\n##"+" "*25+"##\n"+"#"*29+"\n\nThank you for trying this software. I hope you like it.\n\n\n")
 	return
 
+def Help(state) :
+
+	if state == "idle" :
+		string = open('READ_ME.txt','r').read()
+	elif state == "format" :
+		string = "This software converts pictures from a format in another format. Possible formats currently are "+Flist+". For instance if you want your files to be converted in jpg, simply type 'jpg'."
+	elif state == "prefix" :
+		string = "A prefix is a small string that is written at the beginning of the files' name. For instance, if you type 'converted_', all your converted files will be named 'converted_X' where X is their original name."
+	elif state == "suffix" :
+		string = "A suffix is a small string that is written at the end of the files' name. For instance, if you type '_converted', all your converted files will be named 'X_converted' where X is their original name."
+	elif state == "compress" :
+		string = "You have selected the compress option. This will compress all your converted pictures in a 7z or a tar.gz file of which name can be set. For instance, if you type 'compressed', your archive will be named 'compressed'."
+	elif state == "decompress" :
+		string = "An archive has been found in analyzed folder. You can choose to decompress it and convert all pictures that could be stored in it, or you can choose to ignore it."
+	elif state == "remove" :
+		string = "You have selected the replace option. This will replace all original files by the converted files. This means that all original files will be deleted with no back-up possibility! Think about it carefully, especially if you have selected a final format with loss as jpg."
+	elif state == "resize" :
+		string = "In order to resize your pictures, you have to enter their final dimensions. This must be set using this format of instruction: 'WxH u' where W is the width, H is the height and u is the unit. Two units are available: 'asm' and 'osr'. The first one is an absolute unit expressed in pixels and the second one is a relative unit expressed as a percentage. If W or H is left at 0, it will automatically be set according to the original ratio.\nFor instance, if you type 100x200 asm, all converted files will be 100 pixels wide and 200 pixels tall. If you type 100x200 osr, all converted files will be 100% their orignal wideness and 200% their original heightness. Finally, if you type 50x0 osr, all converted files will be half smaller than the original size while keeping the same ratio."
+	elif state == "Memory_Warning" :
+		string = "You are about to generate at least a picture of which size is superior to 30Mpix. This might induce some memory issue and a longer execution time. You can choose to continue or to ignore this files."
+	else :
+		string = open('READ_ME.txt','r').read()
+
+	return print("\n\n"+string+"\n\n")
 
 
 def display(string,over,Len):   # Allows compatibility with Python 2 and, more importantly, simplifies the dynamic print
@@ -90,33 +114,55 @@ def get_options():    # This analyse any possible launching options
 			print("Invalid option\n")
 			sys.exit(0)
 
+		PATH = False
+		if len(sys.argv) >= 3 :
+			if re.search(r"^/(\w/)*$",sys.argv[2]) :
+				PATH = True
+			else :
+				print("Invalid path\n")
+				sys.exit(0)
 
 
 	# We act accordingly
 
 	if HELP == True :
-		print("\n\n"+open("READ_ME.txt",'r').read()+"\n")
+		Help("idle")
 		sys.exit(0)
 
 	if REPLACE == True :
 		sure = "Warning"
 		while sure == "Warning":
-			sure = get_clean(input_("Are you sure you want to replace your files? (y/n)\n"))
+			sure = get_clean(input_("Are you sure you want to replace your files? (y/n) - h (help) q (quit)\n"))
 			if sure == "n" :
 				REPLACE = False
+			elif sure  == "h" :
+				Help(replace)
+				sure = "Warning"
+			elif sure == "q" :
+				sys.exit(0)
 			elif sure != "y" :
 				sure = "Warning"
 	s = str()
 	if SUFFIX == True :
 		tmp = "Warning"
 		while tmp == "Warning":
-			tmp = get_clean(str(input_("Enter a suffix for your files (15 characters max)\n")))
+			tmp = get_clean(str(input_("Enter a suffix for your files (15 characters max) - h (help) q (quit)\n")))
+			if tmp == "q" :
+				sys.exit(0)
+			elif tmp == "h" :
+				Help("suffix")
+				tmp = "Warning"
 		s = tmp
 	p = str() 
 	if PREFIX == True :
 		tmp = "Warning"
 		while tmp == "Warning":
-			tmp = get_clean(str(input_("Enter a prefix for your files (15 characters max)\n")))
+			tmp = get_clean(str(input_("Enter a prefix for your files (15 characters max) - h (help) q (quit)\n")))
+			if tmp == "q" :
+				sys.exit(0)
+			elif tmp == "h" :
+				Help("prefix")
+				tmp = "Warning"
 		p = tmp
 
 	a = str()
@@ -127,6 +173,11 @@ def get_options():    # This analyse any possible launching options
 				tmp = get_clean(str(input_("\nEnter a name for your compressed folders (15 characters max)\n")))
 			else :
 				tmp = get_clean(str(input_("\nEnter a name for your compressed folder (15 characters max)\n")))
+			if tmp == "q" :
+				sys.exit(0)
+			elif tmp == "h" :
+				Help("compress")
+				tmp = "Warning"
 		a = tmp
 
 	size = list() 
@@ -134,9 +185,14 @@ def get_options():    # This analyse any possible launching options
 		# The user should have the choice between a relative and an absolute resize method. This can easily be done by adding virtual units. The relative unit will be "osr" for "original size relative" and the absolute unit will be "asm" for absolute size measurement. The expected input is something of the form NxM u with N the x value, M the y value and u the unit. If u is osr, x and y must be integers between 0 and 10,000 (this will be treated as a percentage), if u is asm, x and y must be integers between 0 and 100*their_original_value. If the final definition is superior to 30 Mpx, a warning message should pop.
 		tmp = "Warning"
 		while tmp == "Warning" :
-			tmp = get_clean(input_("Enter a new size for your converted pictures. Input format must be WxH u where W is the width, H is the height and u is the unit.\nTwo units currently exists: osr is a relative unit - 100 osr corresponds to the original size - and asm is an absolut unit - 100 asm corresponds to a 100 pixels -\n"))
-			if re.search(r"^[0-9]{1,8}[x]{1}[0-9]{1,8}[asm]{1}$",tmp) or re.search(r"^[0-9]{1,8}[x]{1}[0-9]{1,8}['osr']{1}$",tmp) :
+			tmp = get_clean(input_("Enter a new size for your converted pictures. Input format must be WxH u where W is the width, H is the height and u is the unit.\nTwo units currently exists: osr is a relative unit - 100 osr corresponds to the original size - and asm is an absolute unit - 100 asm corresponds to a 100 pixels. If W or H equals zero, it will be set according to the original ratio.\n"))
+			if re.search(r"^[0-9]{1,8}x[0-9]{1,8}\s(asm|osr)$",tmp) :
 				size = tmp
+			elif tmp == "h" :
+				Help("resize")
+				tmp == "Warning"
+			elif tmp == "q" :
+				sys.exit(0)
 			else :
 				tmp = "Warning"
 
@@ -147,7 +203,7 @@ def get_options():    # This analyse any possible launching options
 
 		size = [W,H,l[1]]
 	
-	options = [FAST, HELP, REPLACE, ZIP, RECURSIVE, PREFIX, SUFFIX, RESIZE, TAR, p, s, a, size]
+	options = [FAST, HELP, REPLACE, ZIP, RECURSIVE, PREFIX, SUFFIX, RESIZE, TAR, PATH, p, s, a, size]
 
 	return options
 
@@ -175,10 +231,13 @@ def analyze_data(Dir, filesname, filespath, RECURSIVE):      # This analyze the 
 				if Dcmprssd == False :    # If it is an archive and if it has not been decompressed yet, we ask the user what he wants to do
 					tmp = "Warning"
 					while tmp == "Warning" :
-						tmp = get_clean(str(input_("\nA compressed file has been found. Do you want to decompress it? (y/n)\n")))
+						tmp = get_clean(str(input_("\nA compressed file has been found. Do you want to decompress it? (y/n) - h (help) q (quit)\n")))
 						if tmp == "y" or tmp == "n" :
 							break
-
+						elif tmp == "h" :
+							Help("decompress")
+						elif tmp == "q" :
+							sys.exit(0)
 						else :
 							tmp = "Warning"
 					rep = tmp
@@ -228,10 +287,15 @@ def memory_warning(size, filesname, filespath) :
 		tmp = "Warning"
 		while tmp == "Warning" :
 			tmp = get_clean(input_("Warning: this will produce large files and might result in memory issue. Are you sure you want to continue? (y/n)"))
-			if tmp != "y" and tmp != "n" :
+			if tmp != "y" and tmp != "n" and tmp != "h" and tmp != "q":
 				tmp = "Warning"
-			else :
-				return sys.exit()
+			elif tmp == "n" :
+				return sys.exit(0)
+			elif tmp == "h" :
+				Help("Memory_warning")
+				tmp = "Warning"
+			elif tmp == "q" :
+				sys.exit(0)
 
 	return [w,h,size[2]]
 
@@ -246,13 +310,19 @@ def get_format():   # This gets the final format the user wants his pictures to 
 	Flist = ", ".join(flist)
 
 	while F == "NC" :
-		G = str(input_("\nEnter the final format of your pictures among "+Flist+"\n"))
+		G = get_clean(str(input_("\nEnter the final format of your pictures among "+Flist+" - h (help) q (quit)\n")))
 		for elt in flist :
 			if G == elt :
 				F = G
 				break
 			else :
-				F = "NC"
+				if G == "h" :
+					Help('format')
+					F = "NC"
+				elif G == "q" :
+					sys.exit(0)
+				else :
+					F = "NC"
 
 	return F
 
@@ -275,9 +345,18 @@ def make_dir(Dir):     # This creates the Dir if it does not already exists
 			os.mkdir(m)
 	return
 
-def resize(img, size):
+def resize(img, size):   # This rsizes an image to a given size according to the dimensions or the scale entered by the user
 	W = size[0]
 	H = size[1]
+	if W == 0 :
+		if H == 0 :
+			W = img.size[0]
+			H = img.size[1]
+		else :
+			W = int(H*img.size[0]/img.size[1])
+	if H == 0 :
+		if W != 0 :
+			H = int(W*img.size[1]/img.size[0])
 	if size[2] == "osr" :
 			W = int(img.size[0]*W/100)
 			H = int(img.size[1]*H/100)
@@ -408,6 +487,7 @@ def compress(convertedfiles):    # This compresses the converted files
 
 greetings(version)
 
+
 # First, we initialize our global variables
 
 
@@ -424,14 +504,16 @@ PREFIX = options[5]
 SUFFIX = options[6]
 RESIZE = options[7]
 TAR = options[8]
-p = options[9]
-s = options[10]
-a = options[11]
-size = options[12]
+PATH = options[9]
+p = options[10]
+s = options[11]
+a = options[12]
+size = options[13]
 
 # We ask the user about his desired final format
 
 F = get_format()
+
 
 # We analyze the files to convert
 
@@ -440,7 +522,11 @@ display("\nAnalyzing the files...","notover",0)
 Decompressed = list()
 filespath = list()
 filesname = list()
-folder = os.getcwd()
+
+if PATH == True :
+	folder = sys.argv[2]
+else :
+	folder = os.getcwd()
 
 analyze_data("original", filesname, filespath, RECURSIVE)
 
@@ -453,7 +539,7 @@ for elt in filesname:
 	total+=1
 
 if FAST == False :
-	time.sleep(2)
+	time.sleep(1)
 display("Files analyzed:","over",30)
 print("\n"+", ".join(filesname))
 
