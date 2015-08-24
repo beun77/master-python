@@ -5,9 +5,9 @@
 import os, sys, time, re, tarfile
 from PIL import Image
 from os.path import isfile, join
+import curses
 
-
-
+#stdscr = curses.initscr()
 version = "v3.4.1"
 
 
@@ -40,7 +40,7 @@ def Help(state) :
 	else :
 		string = open('READ_ME.txt','r').read()
 
-	return print("\n\n"+"#"*50+"\n\nHELP\n\n"+string+"\n\n")
+	return print("\n\n"+"#"*50+"\n\nHELP\n\n"+string+"\n\n"+"#"*50+"\n\n")
 
 
 def display(string,over,Len):   # Allows compatibility with Python 2 and, more importantly, simplifies the dynamic print
@@ -52,6 +52,48 @@ def display(string,over,Len):   # Allows compatibility with Python 2 and, more i
 		sys.stdout.flush()
 	return
 
+
+def Display(string,X,Y) :   # This prints a given string at the specified position according to its coordonates (X,Y)
+	curses.noecho()
+	curses.cbreak()
+	if X < 0 or X >= curses.COLS :
+		X = 0
+	if Y < 0 or Y >= curses.LINES :
+		Y = 0	
+	#Xmax = Xmin+curses.COLS-1
+	#Ymax = Ymin+curses.LINES-1
+	addstr(Y,X,string)
+	return
+
+
+def nav(enable, file) :
+	Fl = open(file,'r')
+	F = FL.read().split("<new>")
+	Ymin = F.len()-curses.LINES
+	while enable == 1 :
+		# Displays elements written before or after the current displayed ones according to the hitten arrow key
+		stdscr.keypad(True)
+		key = stdscr.getkey()
+		X = 10
+		Y = 30
+
+		if key == "KEY_UP" :
+			Ymin += 3
+		elif key == "KEY_DOWN" :
+			Ymin -= 3
+
+		to_display = F[Ymin:Ymax]
+		Display("\n".join(to_display), X, Y)
+		Fl.close()
+	return
+
+
+def store(string, file) :
+	# Stores all relevant informations in a text file => Helps in case of error or just to use the nav function
+	Fl = open(file,'a+')
+	Fl.write(string+"<new>", 'a')
+	Fl.close()
+	return
 
 def input_(string):      # Allows compatibility with Python 2
 	if sys.version_info[0] < 3 :
@@ -170,8 +212,8 @@ def get_options():    # This analyse any possible launching options
 		tmp = "Warning"
 		while tmp == "Warning":
 			if TAR == True and ZIP == True :
-			tmp = get_clean(str(input_("\nEnter a name for your compressed folders (15 characters max)\n")))
-		else :
+				tmp = get_clean(str(input_("\nEnter a name for your compressed folders (15 characters max)\n")))
+			else :
 				tmp = get_clean(str(input_("\nEnter a name for your compressed folder (15 characters max)\n")))
 			if tmp == "q" :
 				sys.exit(0)
