@@ -40,7 +40,7 @@ def Help(state) :
 	else :
 		string = open('READ_ME.txt','r').read()
 
-	return print("\n\n"+string+"\n\n")
+	return print("\n\n"+"#"*50+"\n\nHELP\n\n"+string+"\n\n")
 
 
 def display(string,over,Len):   # Allows compatibility with Python 2 and, more importantly, simplifies the dynamic print
@@ -62,7 +62,7 @@ def input_(string):      # Allows compatibility with Python 2
 
 
 def get_clean(string):  # Helps to fight against any code injection attack
-	if re.search(r"^[0-9A-Za-z-_]{1,15}$", string) is None :
+	if re.search(r"^[0-9A-Za-z-_ ]{1,15}$", string) is None :
 		return "Warning"
 	else :
 		return string
@@ -170,8 +170,8 @@ def get_options():    # This analyse any possible launching options
 		tmp = "Warning"
 		while tmp == "Warning":
 			if TAR == True and ZIP == True :
-				tmp = get_clean(str(input_("\nEnter a name for your compressed folders (15 characters max)\n")))
-			else :
+			tmp = get_clean(str(input_("\nEnter a name for your compressed folders (15 characters max)\n")))
+		else :
 				tmp = get_clean(str(input_("\nEnter a name for your compressed folder (15 characters max)\n")))
 			if tmp == "q" :
 				sys.exit(0)
@@ -182,15 +182,14 @@ def get_options():    # This analyse any possible launching options
 
 	size = list() 
 	if RESIZE == True :
-		# The user should have the choice between a relative and an absolute resize method. This can easily be done by adding virtual units. The relative unit will be "osr" for "original size relative" and the absolute unit will be "asm" for absolute size measurement. The expected input is something of the form NxM u with N the x value, M the y value and u the unit. If u is osr, x and y must be integers between 0 and 10,000 (this will be treated as a percentage), if u is asm, x and y must be integers between 0 and 100*their_original_value. If the final definition is superior to 30 Mpx, a warning message should pop.
 		tmp = "Warning"
 		while tmp == "Warning" :
-			tmp = get_clean(input_("Enter a new size for your converted pictures. Input format must be WxH u where W is the width, H is the height and u is the unit.\nTwo units currently exists: osr is a relative unit - 100 osr corresponds to the original size - and asm is an absolute unit - 100 asm corresponds to a 100 pixels. If W or H equals zero, it will be set according to the original ratio.\n"))
-			if re.search(r"^[0-9]{1,8}x[0-9]{1,8}\s(asm|osr)$",tmp) :
+			tmp = get_clean(input_("Enter a new size for your converted pictures. Input format must be WxH u where W is the width, H is the height and u is the unit.\nTwo units currently exists: osr is a relative unit - 100 osr corresponds to the original size - and asm is an absolute unit - 100 asm corresponds to a 100 pixels. If W or H equals zero, it will be set according to the original ratio. - h (help) q (quit)\n"))
+			if not (re.search(r"^[0-9]{1,8}x[0-9]{1,8} (asm|osr)$",tmp) is None) :
 				size = tmp
 			elif tmp == "h" :
 				Help("resize")
-				tmp == "Warning"
+				tmp = "Warning"
 			elif tmp == "q" :
 				sys.exit(0)
 			else :
@@ -247,8 +246,8 @@ def analyze_data(Dir, filesname, filespath, RECURSIVE):      # This analyze the 
 					tar.extractall(folder+"/"+Dir)
 					tar.close()
 					Decompressed.append(folder+"/"+Dir+"/"+File)
-					#filesname = list() 
-					#filespath = list()
+					filesname = list()		# PROBLEM WITH RECURSIVITY ? IT DECOMPRESSES THE FOLDER BUT DOES NOT ANALYZE IT 
+					filespath = list()
 					RECURSIVE = True
 					analyze_data(Dir, filesname, filespath, RECURSIVE)
 		elif RECURSIVE == True:
@@ -525,10 +524,12 @@ filesname = list()
 
 if PATH == True :
 	folder = sys.argv[2]
+	fld = ""
 else :
 	folder = os.getcwd()
+	fld = "original"
 
-analyze_data("original", filesname, filespath, RECURSIVE)
+analyze_data(fld, filesname, filespath, RECURSIVE)
 
 if RESIZE == True :   
 	size = memory_warning(size, filesname, filespath)
