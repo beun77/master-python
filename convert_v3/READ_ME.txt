@@ -1,12 +1,12 @@
 		#############################
 		##                         ##
 		##    C O N V E R T E R    ##
-		##          v3.3.1         ##
+		##          v3.4.1         ##
 		##                         ##
 		#############################
 
 		    by Benoit Porteboeuf
-		benoit.porteboeuf@gmail.com
+		porteboeuf.benoit@gmail.com
 
 
 	DESCRIPTION
@@ -19,7 +19,7 @@ Please note that you should have Python 2 or greater installed.
 
 1. Select all pictures and copy them in the "original" folder. Compressed files can be read as well.
 2. Open a terminal and go to the convert directory.
-3. Type "python convert.py". You can use some launching options if you want.
+3. Type "python convert.py". You can use some launching options if you want or add the path to your pictures' folder.
 4. Enter your final format. Available formats currently are jpg, png, bmp, gif, tiff, pdf.
 5. All your converted files will be saved in the "computed" folder.
 
@@ -40,4 +40,4 @@ Those options are:
 -z : Compresses all your converted pictures into a .7z file
 
 
-edited on 08.20.2015
+edited on 08.23.2015

@@ -1,0 +1,19 @@
+id A
+id B
+id C
+id D
+id E
+id F
+id G
+id H
+id I
+edge A C
+edge B C
+edge C D
+edge C E
+edge E F
+edge F G
+edge G H
+edge G I
+edge H I
+

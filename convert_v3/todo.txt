@@ -1,9 +1,20 @@
-régler problème expressions régulières asm ou osm si changement d'échelle       => Syntaxe
+régler problème expressions régulières asm ou osm si changement d'échelle       => Syntaxe  => OK
+
 régler problème arborescence archive                                            => ??
-régler problème format archove                                                  => 7z ok ?
+
+régler problème format archive                                                  => 7z ok ?
+
 optimiser lecture archive dans les listes (ne pas faire de calculs en double)   => Réinitialisation liste impossible ? nécessite d'ajouter une 											fonction de détection des doublons
-permettre la lecture d'un dossier autre que "original"				=> Codé mais à tester
-repenser et optimiser l'affichage						=> adopter un point de vue 2D et non 1D pour l'afficah dynamique ? 											+ gérer la taille de l'écran
-intégrer l'aide en "dur" dans le programme ?					=> évite les mauvaises manipulations
-permettre de quitter ou de lancer l'aide à tout moment ? 			=> nécessite une aide intelligente, qui s'adapte à la situation en 											cours
-gérer les erreurs								=> except
+										=> Réinitialisation possible mais problème d'analyse. + Possibilité de 											supprimer les fichiers de l'archive une fois convertis
+
+permettre la lecture d'un dossier autre que "original"				=> Codé mais à tester => Expressions régulières + pas nécessairement 											options de lancement => A tester
+
+repenser et optimiser l'affichage						=> adopter un point de vue 2D et non 1D pour l'affichage dynamique ? 											+ gérer la taille de l'écran (/!\ messages d'aide /!\) + générer un 											transcript ?
+
+intégrer l'aide en "dur" dans le programme ?					=> +- codé
+
+permettre de quitter ou de lancer l'aide à tout moment ? 			=> Codé mais à tester
+
+gérer les erreurs								=> except ?
+
+découper en plusieurs fichiers							=> Main, Help, Convert, Options, Analyze, Display

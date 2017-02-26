@@ -17,7 +17,7 @@ def greetings(version) :
 	print("\n\n"+"#"*29+"\n##"+" "*25+"##\n##    C O N V E R T E R    ##\n##"+" "*a+version+" "*b+"##\n##"+" "*25+"##\n"+"#"*29+"\n\nThank you for trying this software. I hope you like it.\n\n\n")
 	return
 
-def Help(state) :
+def Help(state, Flist) :
 
 	if state == "idle" :
 		string = open('READ_ME.txt','r').read()
@@ -109,9 +109,11 @@ def get_clean(string):  # Helps to fight against any code injection attack
 	else :
 		return string
 
+def delete(File, Folder):
+	os.remove(Folder + '/' + File)
+	return
 
-
-def get_options():    # This analyse any possible launching options
+def get_options(Flist):    # This analyse any possible launching options
 
 	# We initiate our launching options
 
@@ -120,6 +122,7 @@ def get_options():    # This analyse any possible launching options
 	REPLACE = False
 	ZIP = False
 	RECURSIVE = False
+	PATH = False
 	PREFIX = False
 	SUFFIX = False
 	RESIZE = False
@@ -152,6 +155,8 @@ def get_options():    # This analyse any possible launching options
 				elif elt != "-" :
 					print("Invalid option\n")
 					sys.exit(0)
+		elif re.search(r"^/'\w/)*$",sys.argv[1]) :
+			PATH = True
 		else :
 			print("Invalid option\n")
 			sys.exit(0)
@@ -168,7 +173,7 @@ def get_options():    # This analyse any possible launching options
 	# We act accordingly
 
 	if HELP == True :
-		Help("idle")
+		Help("idle", Flist)
 		sys.exit(0)
 
 	if REPLACE == True :
@@ -178,7 +183,7 @@ def get_options():    # This analyse any possible launching options
 			if sure == "n" :
 				REPLACE = False
 			elif sure  == "h" :
-				Help(replace)
+				Help('replace', Flist)
 				sure = "Warning"
 			elif sure == "q" :
 				sys.exit(0)
@@ -203,7 +208,7 @@ def get_options():    # This analyse any possible launching options
 			if tmp == "q" :
 				sys.exit(0)
 			elif tmp == "h" :
-				Help("prefix")
+				Help("prefix", Flist)
 				tmp = "Warning"
 		p = tmp
 
@@ -218,7 +223,7 @@ def get_options():    # This analyse any possible launching options
 			if tmp == "q" :
 				sys.exit(0)
 			elif tmp == "h" :
-				Help("compress")
+				Help("compress", Flist)
 				tmp = "Warning"
 		a = tmp
 
@@ -230,7 +235,7 @@ def get_options():    # This analyse any possible launching options
 			if not (re.search(r"^[0-9]{1,8}x[0-9]{1,8} (asm|osr)$",tmp) is None) :
 				size = tmp
 			elif tmp == "h" :
-				Help("resize")
+				Help("resize", Flist)
 				tmp = "Warning"
 			elif tmp == "q" :
 				sys.exit(0)
@@ -249,7 +254,7 @@ def get_options():    # This analyse any possible launching options
 	return options
 
 
-def analyze_data(Dir, filesname, filespath, RECURSIVE):      # This analyze the "original" folder
+def analyze_data(Dir, filesname, filespath, RECURSIVE, Flist):      # This analyze the "original" folder
 
 	folders = list()
 
@@ -276,7 +281,7 @@ def analyze_data(Dir, filesname, filespath, RECURSIVE):      # This analyze the 
 						if tmp == "y" or tmp == "n" :
 							break
 						elif tmp == "h" :
-							Help("decompress")
+							Help("decompress", Flist)
 						elif tmp == "q" :
 							sys.exit(0)
 						else :
@@ -287,17 +292,17 @@ def analyze_data(Dir, filesname, filespath, RECURSIVE):      # This analyze the 
 					tar = tarfile.open(folder+"/"+Dir+"/"+File)
 					tar.extractall(folder+"/"+Dir)
 					tar.close()
-					Decompressed.append(folder+"/"+Dir+"/"+File)
+					Decompressed.append(folder+"/"+Dir+"/"+File)   # + NEED TO DELETE DECOMPRESSED FILES AFTER THEIR CONVERSION -> NEED TO KNOW WHAT FILES HAVE BEEN DECOMPRESSED
 					filesname = list()		# PROBLEM WITH RECURSIVITY ? IT DECOMPRESSES THE FOLDER BUT DOES NOT ANALYZE IT 
 					filespath = list()
 					RECURSIVE = True
-					analyze_data(Dir, filesname, filespath, RECURSIVE)
+					analyze_data(Dir, filesname, filespath, RECURSIVE,Flist)
 		elif RECURSIVE == True:
 			folders.append(File)
 
 	if RECURSIVE == True:
 		for Folder in folders :
-			analyze_data(Dir+"/"+Folder, filesname, filespath, RECURSIVE)
+			analyze_data(Dir+"/"+Folder, filesname, filespath, RECURSIVE,Flist)
 
 	return 
 
@@ -342,13 +347,12 @@ def memory_warning(size, filesname, filespath) :
 
 
 
-def get_format():   # This gets the final format the user wants his pictures to be converted to
+def get_format(flist, Flist):   # This gets the final format the user wants his pictures to be converted to
 
 	F = "NC"
 	filesname = list()
 
 
-	Flist = ", ".join(flist)
 
 	while F == "NC" :
 		G = get_clean(str(input_("\nEnter the final format of your pictures among "+Flist+" - h (help) q (quit)\n")))
@@ -358,14 +362,14 @@ def get_format():   # This gets the final format the user wants his pictures to 
 				break
 			else :
 				if G == "h" :
-					Help('format')
+					Help('format', Flist)
 					F = "NC"
 				elif G == "q" :
 					sys.exit(0)
 				else :
 					F = "NC"
 
-	return F
+	return [F,Flist]
 
 
 def progression(current,total):     # This is just about calculating and displaying the progression of the conversion or the compression
@@ -454,7 +458,7 @@ def convert(filesname, filespath, size):   # This converts the files whose names
 			K+=1
 		display(Dir1+'/'+ elt + " opened"+" "*(blank+4-k-j)+Progression+" "+Percentage,"over",blank+36)
 
-		name2 = s + name + p + "." + F
+		name2 = str(s) + str(name) + str(p) + "." + str(F)
 
 
 		make_dir(Dir2)
@@ -474,7 +478,8 @@ def convert(filesname, filespath, size):   # This converts the files whose names
 		display(Dir2+"/"+name2 + " saved"+" "*(blank+5-K-J)+Progression+" "+Percentage,"over",blank+40)
 		display(Dir2+"/"+name2+" saved","over",blank+41)
 		if REPLACE == True :
-			os.remove(Dir1 + '/' + elt)
+			delete(elt, Dir1)
+
 		convertedfiles.append(Dir2+"/"+name2)
 
 	return convertedfiles
@@ -526,15 +531,15 @@ def compress(convertedfiles):    # This compresses the converted files
 
 # We start our main program
 
+flist = ["jpg","png","bmp","gif","tiff","pdf"]
+Flist = ", ".join(flist)
+
 greetings(version)
 
 
 # First, we initialize our global variables
 
-
-flist = ["jpg","png","bmp","gif","tiff","pdf"]
-
-options = get_options()
+options = get_options(Flist)
 
 FAST = options[0]
 HELP = options[1]
@@ -553,7 +558,7 @@ size = options[13]
 
 # We ask the user about his desired final format
 
-F = get_format()
+[F,flist] = get_format(flist, Flist)
 
 
 # We analyze the files to convert
@@ -565,13 +570,16 @@ filespath = list()
 filesname = list()
 
 if PATH == True :
-	folder = sys.argv[2]
+	if len(sys.argv) == 2 :
+		folder = sys.argv[1]
+	else :
+		folder = sys.argv[2]
 	fld = ""
 else :
 	folder = os.getcwd()
 	fld = "original"
 
-analyze_data(fld, filesname, filespath, RECURSIVE)
+analyze_data(fld, filesname, filespath, RECURSIVE,Flist)
 
 if RESIZE == True :   
 	size = memory_warning(size, filesname, filespath)

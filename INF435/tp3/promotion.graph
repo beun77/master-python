@@ -1,0 +1,330 @@
+id Myriel
+id Napoleon
+id MlleBaptistine
+id MmeMagloire
+id CountessDeLo
+id Geborand
+id Champtercier
+id Cravatte
+id Count
+id OldMan
+id Labarre
+id Valjean
+id Marguerite
+id MmeDeR
+id Isabeau
+id Gervais
+id Tholomyes
+id Listolier
+id Fameuil
+id Blacheville
+id Favourite
+id Dahlia
+id Zephine
+id Fantine
+id MmeThenardier
+id Thenardier
+id Cosette
+id Javert
+id Fauchelevent
+id Bamatabois
+id Perpetue
+id Simplice
+id Scaufflaire
+id Woman1
+id Judge
+id Champmathieu
+id Brevet
+id Chenildieu
+id Cochepaille
+id Pontmercy
+id Boulatruelle
+id Eponine
+id Anzelma
+id Woman2
+id MotherInnocent
+id Gribier
+id Jondrette
+id MmeBurgon
+id Gavroche
+id Gillenormand
+id Magnon
+id MlleGillenormand
+id MmePontmercy
+id MlleVaubois
+id LtGillenormand
+id Marius
+id BaronessT
+id Mabeuf
+id Enjolras
+id Combeferre
+id Prouvaire
+id Feuilly
+id Courfeyrac
+id Bahorel
+id Bossuet
+id Joly
+id Grantaire
+id MotherPlutarch
+id Gueulemer
+id Babet
+id Claquesous
+id Montparnasse
+id Toussaint
+id Child1
+id Child2
+id Brujon
+id MmeHucheloup
+edge Napoleon Myriel 50
+edge MlleBaptistine Myriel 49
+edge MmeMagloire Myriel 49
+edge MmeMagloire MlleBaptistine 61
+edge CountessDeLo Myriel 91
+edge Geborand Myriel 57
+edge Champtercier Myriel 46
+edge Cravatte Myriel 32
+edge Count Myriel 35
+edge OldMan Myriel 32
+edge Valjean Labarre 62
+edge Valjean MmeMagloire 45
+edge Valjean MlleBaptistine 96
+edge Valjean Myriel 65
+edge Marguerite Valjean 94
+edge MmeDeR Valjean 77
+edge Isabeau Valjean 54
+edge Gervais Valjean 49
+edge Listolier Tholomyes 95
+edge Fameuil Tholomyes 53
+edge Fameuil Listolier 41
+edge Blacheville Tholomyes 43
+edge Blacheville Listolier 85
+edge Blacheville Fameuil 47
+edge Favourite Tholomyes 98
+edge Favourite Listolier 70
+edge Favourite Fameuil 73
+edge Favourite Blacheville 52
+edge Dahlia Tholomyes 48
+edge Dahlia Listolier 35
+edge Dahlia Fameuil 85
+edge Dahlia Blacheville 76
+edge Dahlia Favourite 84
+edge Zephine Tholomyes 57
+edge Zephine Listolier 92
+edge Zephine Fameuil 46
+edge Zephine Blacheville 90
+edge Zephine Favourite 63
+edge Zephine Dahlia 85
+edge Fantine Tholomyes 51
+edge Fantine Listolier 90
+edge Fantine Fameuil 36
+edge Fantine Blacheville 98
+edge Fantine Favourite 38
+edge Fantine Dahlia 74
+edge Fantine Zephine 40
+edge Fantine Marguerite 72
+edge Fantine Valjean 94
+edge MmeThenardier Fantine 92
+edge MmeThenardier Valjean 72
+edge Thenardier MmeThenardier 34
+edge Thenardier Fantine 61
+edge Thenardier Valjean 36
+edge Cosette MmeThenardier 85
+edge Cosette Valjean 15
+edge Cosette Tholomyes 87
+edge Cosette Thenardier 88
+edge Javert Valjean 61
+edge Javert Fantine 57
+edge Javert Thenardier 57
+edge Javert MmeThenardier 91
+edge Javert Cosette 95
+edge Fauchelevent Valjean 98
+edge Fauchelevent Javert 95
+edge Bamatabois Fantine 86
+edge Bamatabois Javert 58
+edge Bamatabois Valjean 52
+edge Perpetue Fantine 40
+edge Simplice Perpetue 68
+edge Simplice Valjean 60
+edge Simplice Fantine 50
+edge Simplice Javert 72
+edge Scaufflaire Valjean 77
+edge Woman1 Valjean 59
+edge Woman1 Javert 81
+edge Judge Valjean 37
+edge Judge Bamatabois 40
+edge Champmathieu Valjean 79
+edge Champmathieu Judge 84
+edge Champmathieu Bamatabois 97
+edge Brevet Judge 61
+edge Brevet Champmathieu 81
+edge Brevet Valjean 83
+edge Brevet Bamatabois 41
+edge Chenildieu Judge 93
+edge Chenildieu Champmathieu 63
+edge Chenildieu Brevet 79
+edge Chenildieu Valjean 98
+edge Chenildieu Bamatabois 78
+edge Cochepaille Judge 36
+edge Cochepaille Champmathieu 39
+edge Cochepaille Brevet 60
+edge Cochepaille Chenildieu 36
+edge Cochepaille Valjean 95
+edge Cochepaille Bamatabois 71
+edge Pontmercy Thenardier 76
+edge Boulatruelle Thenardier 70
+edge Eponine MmeThenardier 87
+edge Eponine Thenardier 72
+edge Anzelma Eponine 58
+edge Anzelma Thenardier 68
+edge Anzelma MmeThenardier 46
+edge Woman2 Valjean 68
+edge Woman2 Cosette 99
+edge Woman2 Javert 71
+edge MotherInnocent Fauchelevent 91
+edge MotherInnocent Valjean 65
+edge Gribier Fauchelevent 82
+edge MmeBurgon Jondrette 49
+edge Gavroche MmeBurgon 85
+edge Gavroche Thenardier 73
+edge Gavroche Javert 45
+edge Gavroche Valjean 62
+edge Gillenormand Cosette 98
+edge Gillenormand Valjean 75
+edge Magnon Gillenormand 77
+edge Magnon MmeThenardier 49
+edge MlleGillenormand Gillenormand 79
+edge MlleGillenormand Cosette 96
+edge MlleGillenormand Valjean 55
+edge MmePontmercy MlleGillenormand 51
+edge MmePontmercy Pontmercy 41
+edge MlleVaubois MlleGillenormand 60
+edge LtGillenormand MlleGillenormand 79
+edge LtGillenormand Gillenormand 68
+edge LtGillenormand Cosette 92
+edge Marius MlleGillenormand 32
+edge Marius Gillenormand 35
+edge Marius Pontmercy 65
+edge Marius LtGillenormand 89
+edge Marius Valjean 81
+edge Marius Tholomyes 79
+edge Marius Thenardier 10
+edge Marius Eponine 48
+edge Marius Gavroche 41
+edge BaronessT Gillenormand 69
+edge BaronessT Marius 36
+edge Mabeuf Marius 92
+edge Mabeuf Eponine 48
+edge Mabeuf Gavroche 44
+edge Enjolras Marius 40
+edge Enjolras Gavroche 57
+edge Enjolras Javert 33
+edge Enjolras Mabeuf 85
+edge Enjolras Valjean 59
+edge Combeferre Enjolras 60
+edge Combeferre Marius 82
+edge Combeferre Gavroche 44
+edge Combeferre Mabeuf 90
+edge Prouvaire Gavroche 60
+edge Prouvaire Enjolras 85
+edge Prouvaire Combeferre 92
+edge Feuilly Gavroche 64
+edge Feuilly Enjolras 72
+edge Feuilly Prouvaire 43
+edge Feuilly Combeferre 31
+edge Feuilly Mabeuf 55
+edge Feuilly Marius 67
+edge Courfeyrac Marius 64
+edge Courfeyrac Enjolras 94
+edge Courfeyrac Combeferre 56
+edge Courfeyrac Gavroche 63
+edge Courfeyrac Mabeuf 47
+edge Courfeyrac Eponine 64
+edge Courfeyrac Feuilly 30
+edge Courfeyrac Prouvaire 93
+edge Bahorel Combeferre 89
+edge Bahorel Gavroche 48
+edge Bahorel Courfeyrac 36
+edge Bahorel Mabeuf 40
+edge Bahorel Enjolras 32
+edge Bahorel Feuilly 66
+edge Bahorel Prouvaire 98
+edge Bahorel Marius 45
+edge Bossuet Marius 65
+edge Bossuet Courfeyrac 78
+edge Bossuet Gavroche 97
+edge Bossuet Bahorel 33
+edge Bossuet Enjolras 49
+edge Bossuet Feuilly 66
+edge Bossuet Prouvaire 71
+edge Bossuet Combeferre 31
+edge Bossuet Mabeuf 57
+edge Bossuet Valjean 51
+edge Joly Bahorel 55
+edge Joly Bossuet 34
+edge Joly Gavroche 93
+edge Joly Courfeyrac 75
+edge Joly Enjolras 75
+edge Joly Feuilly 59
+edge Joly Prouvaire 94
+edge Joly Combeferre 32
+edge Joly Mabeuf 34
+edge Joly Marius 66
+edge Grantaire Bossuet 66
+edge Grantaire Enjolras 89
+edge Grantaire Combeferre 89
+edge Grantaire Courfeyrac 48
+edge Grantaire Joly 47
+edge Grantaire Gavroche 41
+edge Grantaire Bahorel 84
+edge Grantaire Feuilly 30
+edge Grantaire Prouvaire 62
+edge MotherPlutarch Mabeuf 89
+edge Gueulemer Thenardier 38
+edge Gueulemer Valjean 86
+edge Gueulemer MmeThenardier 90
+edge Gueulemer Javert 73
+edge Gueulemer Gavroche 36
+edge Gueulemer Eponine 46
+edge Babet Thenardier 91
+edge Babet Gueulemer 59
+edge Babet Valjean 31
+edge Babet MmeThenardier 55
+edge Babet Javert 97
+edge Babet Gavroche 67
+edge Babet Eponine 65
+edge Claquesous Thenardier 52
+edge Claquesous Babet 37
+edge Claquesous Gueulemer 98
+edge Claquesous Valjean 46
+edge Claquesous MmeThenardier 46
+edge Claquesous Javert 34
+edge Claquesous Eponine 82
+edge Claquesous Enjolras 41
+edge Montparnasse Javert 58
+edge Montparnasse Babet 85
+edge Montparnasse Gueulemer 93
+edge Montparnasse Claquesous 64
+edge Montparnasse Valjean 30
+edge Montparnasse Gavroche 61
+edge Montparnasse Eponine 35
+edge Montparnasse Thenardier 74
+edge Toussaint Cosette 60
+edge Toussaint Javert 61
+edge Toussaint Valjean 82
+edge Child1 Gavroche 44
+edge Child2 Gavroche 32
+edge Child2 Child1 63
+edge Brujon Babet 68
+edge Brujon Gueulemer 62
+edge Brujon Thenardier 70
+edge Brujon Gavroche 43
+edge Brujon Eponine 72
+edge Brujon Claquesous 41
+edge Brujon Montparnasse 91
+edge MmeHucheloup Bossuet 68
+edge MmeHucheloup Joly 52
+edge MmeHucheloup Grantaire 74
+edge MmeHucheloup Bahorel 65
+edge MmeHucheloup Courfeyrac 38
+edge MmeHucheloup Gavroche 30
+edge MmeHucheloup Enjolras 32

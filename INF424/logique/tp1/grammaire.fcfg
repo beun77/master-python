@@ -1,0 +1,22 @@
+# -*- coding: utf-8 -*-
+% start S
+S -> NP[NB=?n] VP[NB=?n] | NP[NB=?n] V[NB=?n]
+NP[NB=?n] -> DET[GENRE=?g,NB=?n] N[GENRE=?g,NB=?n] ADJ[GENRE=?g,NB=?n] | DET[GENRE=?g,NB=?n] N[GENRE=?g,NB=?n]
+VP[NB=?n] -> VTD NP[NB=?n] | VTI[NB=?n] PROP NP
+V[NB=?n] -> VI[NB=?n]
+DET[GENRE=FEM,NB=SING] -> 'la' | 'une'
+DET[GENRE=HOM,NB=SING] -> 'le' | 'un'
+DET[NB=PLU] -> 'les' | 'des'
+N[GENRE=FEM,NB=SING] -> 'fille' | 'robe' | 'amie'
+N[GENRE=MAS,NB=SING] -> 'ami'
+N[GENRE=FEM,NB=PLU] -> 'filles' | 'robes' | 'amies'
+N[GENRE=MAS,NB=PLU] -> 'amis'
+VTD[NB=SING] -> 'porte'
+VTD[NB=PLU] -> 'portent'
+VTI[NB=SING] -> 'parle'
+VTI[NB=PLU] -> 'parlent'
+VI[NB=SING] -> 'dort' | 'parle'
+VI[NB=PLU] -> 'dorment' | 'parlent'
+ADJ[NB=SING] -> 'rouge'
+ADJ[NB=PLU] -> 'rouges'
+PROP -> 'à'
